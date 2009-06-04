@@ -1,0 +1,16 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+ "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<title>FCCC: Faculty Publications <%= "- #{@title}" if @title %></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Language" content="en-us" />
+	<%= javascript_include_tag :defaults %>
+	<%= stylesheet_link_tag 'print' %>
+</head>
+<body>
+
+<%= yield :layout %>
+
+</body>
+</html>

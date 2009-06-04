@@ -1,0 +1,15 @@
+<div id="menubar2">
+	
+	<div id="welcome">
+		<%= "Welcome, " + session[:user][:name] %>
+		<span style="font-size: 93%;">(<%= link_to 'logout', :action => 'logout' -%>)</span>
+	</div>
+	
+	<div id="view_options">
+	<ul>
+		<li><%= link_to 'Programs', { :controller => 'programs' } %></li>
+		<li><%= link_to 'Investigators', { :controller => 'investigators' } %></li>
+		<li><%= link_to 'Abstracts', { :controller => '/abstracts' } %></li>
+	</ul>
+	</div>
+</div>

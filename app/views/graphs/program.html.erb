@@ -1,0 +1,18 @@
+<% @title = "Interaction Graph for #{@program.program_title}" %>
+<% @title += year_range_display %>
+
+
+<div class="information">
+	<p>This graph shows the number of publications in common between each member of <%= @program.program_title%>. Mouse over a specific member to get the total publication count during the specified year range and the number of intra-programmatic and inter-programmatic collaborations during that time.</p>
+</div>
+
+
+<div id="listing" style="width: 0 auto; text-align:center;"> 
+	<div id="DeliveryGraph"></div>
+
+	<script type="text/javascript">
+		var activity = new FusionCharts("<%= url_for(:controller=>'flash',:action=>'DragNode.swf') %>", "DeliveryGraph", "950", "700", "0", "1");
+		activity.setDataURL("<%= url_for(:controller=>'graphs',:action=>'program_nodes', :id => params[:id]) %>");
+		activity.render("DeliveryGraph");
+	</script>
+</div>

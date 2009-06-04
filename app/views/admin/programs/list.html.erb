@@ -1,0 +1,44 @@
+<% @title = "Administration : Programs" %>
+
+<% if !@programs.empty? %>
+
+<table class="listing" style="width: 65%;">
+	<caption><%= @heading %></caption>
+	<tr>
+	<th>Program</th>
+	<th>Category</th>
+	<th>&nbsp;</th>
+	</tr>
+
+	<tr>
+		<td colspan="3" style="text-align: center;" class="pagination">	<%= will_paginate(@programs) %></td>
+	</tr>
+
+	<% @programs.each do |program| %>
+	<tr class="<%= cycle("even", "odd") -%>"> 
+		<td><%= link_to program.program_title, :action => 'show', :id => program -%></td>
+		<td><%= program.program_category -%></td>
+		<td style="text-align: right;">
+			<%= link_to( image_tag('pencil.png'), { :action => 'edit', :id => program } ) %>
+			<%= link_to( image_tag('remove.png'), 
+				{ :action => 'destroy', :id => program }, 
+				:confirm => "Remove #{program.program_title}?" ) %>
+		</td>		
+	</tr>
+	<% end %>
+	
+	<tr>
+		<td colspan="3" style="text-align: center;" class="pagination">	<%= will_paginate(@programs) %></td>
+	</tr>
+
+</table>
+
+<% else %>
+
+<table>
+  <tr>
+	<td>No programs found.</td>
+  </tr>
+</table>
+
+<% end %>

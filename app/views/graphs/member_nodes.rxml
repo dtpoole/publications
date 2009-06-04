@@ -1,0 +1,67 @@
+@title = "Interaction Graph for " + @investigator.fullname
+@title += " (#{session[:years].starting} - #{session[:years].ending})" unless session[:years].show_all?
+
+investigator_nodes = assignInvestigatorPositions(@investigator)
+
+
+
+xml.chart(:caption => @title, :lineThickness=>'1', :showValues=>'1', :showFormBtn=>'0', :xAxisMinValue=>'0', :xAxisMaxValue=>'100', 
+  :yAxisMinValue=>'0', :yAxisMaxValue=>'100', :is3D=>'1', :animation=>'1', :palette=>'2', :formAction=>'/graphs/list', :formMethod=>'POST',  :enableLink=>'1'  ) do
+    # clickURL works: :clickURL => url_for(:controller=>'abstracts',:action=>'program_listing', :program_id => params[:program_id])
+    xml.dataSet(:seriesName => "Investigator") do
+      cnt=0
+      investigator = @investigator
+        #x,y = calculatePosition(investigator_nodes.internal.length,cnt)
+       # cnt+=1
+        xml.set(:x=>50, :y=>50, :width=>'120', :height=>'40', :name=>investigator.fullname+"\n"+@publication_count +' publications', 
+          :id=>investigator.id,
+          :link => url_for(:controller=>'abstracts',:action=>'member', :id => investigator.username),
+          :color => 'AFD8F8',
+          :tooltext => 'Publications: '+@publication_count+';
+  intra-programmatic collaborations:'+investigator.internal_collaborators.length.to_s+'; 
+  inter-programmatic collaborations:'+investigator.external_collaborators.length.to_s)
+    end
+    xml.dataSet(:seriesName => "Collaborators") do
+      cnt=0
+      investigator_nodes.each do |key_id, investigator|
+        
+        if !session[:years].show_all?
+          abstract_count = investigator.abstracts.count( :conditions => [ 'year BETWEEN :start_year AND :end_year', 
+            {:end_year => session[:years].ending, :start_year => session[:years].starting} ]).to_s
+        else
+          abstract_count = investigator.abstracts.count.to_s
+        end
+      
+        x,y = calculatePosition(investigator_nodes.length,cnt)
+        cnt+=1
+        color = 'FFDB47'
+        color = 'AFD8F8' if investigator.isInternal == true
+        xml.set(:x=>x, :y=>y, :width=>'80', :height=>'30', :name=>investigator.fullname, 
+          :id=>investigator.id,
+          :link => url_for(:controller=>'graphs',:action=>'member', :id => investigator.username),
+          :color => color,
+          :tooltext => "Publications: #{abstract_count}")
+      end
+    end
+  xml.connectors(:stdThickness => "5", :color=>'FF0000', :arrowAtStart=>'0', :arrowAtEnd=>'0' ) do
+    investigator = @investigator
+    investigator.internal_collaborators.keys.each do |collaborator|
+     xml.connector(:strength=>investigator.internal_collaborators[collaborator].length.to_f/10, 
+      :label=>investigator.internal_collaborators[collaborator].length, 
+      :from=>investigator.id, :to=>collaborator, 
+      :color=>'AFD8F8', 
+      :arrowAtStart=>'0', :arrowAtEnd=>'0',
+      :tooltext => 'connections:'+investigator.internal_collaborators[collaborator].length.to_s,
+      :link => url_for(:controller=>'abstracts',:action=>'member', :id => investigator.username) )
+    end
+    investigator.external_collaborators.keys.each do |collaborator|
+     xml.connector(:strength=>investigator.external_collaborators[collaborator].length.to_f/10, 
+      :label=>investigator.external_collaborators[collaborator].length, 
+      :from=>investigator.id, :to=>collaborator, 
+      :color=>'FFDB47', 
+      :arrowAtStart=>'0', :arrowAtEnd=>'0',
+      :tooltext => 'connections:'+investigator.external_collaborators[collaborator].length.to_s,
+      :link => url_for(:controller=>'abstracts',:action=>'member', :id => investigator.username) )
+    end
+  end
+end

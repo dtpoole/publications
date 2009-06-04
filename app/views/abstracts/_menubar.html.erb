@@ -1,0 +1,68 @@
+<div id="menubar" > 
+    <div id="navigation" style="padding: .5em; padding-right:1em; text-align: center;" class="yui-gd"> 
+	
+	<div class="yui-u first" style="">
+		
+		<% form_for :search, :url => {:controller => 'abstracts', :action => "search"} do |form| %> 
+		 	<%= form.text_field :text %>
+	      	<%= form.select(:field, %w{Author Title Journal Abstract All}, {})%> 
+			<%= submit_tag "Search" %>
+		<% end %>
+			
+	
+	</div>
+		
+	<div class="yui-u" style="text-align: right;">
+			<table style="border-left: 4px solid #ccc;">	
+				<tr>
+
+				<td style="width: 33%; text-align: center;">
+				<% form_tag :action => 'year_change' do -%>
+					<%= hidden_field_tag('location', request.request_uri()) %>
+					<%= hidden_field_tag('all', "") %>
+
+					<select id="year_start" name="years[start]" onchange="javascript:this.form.submit();">
+					<%= options_for_select(session[:years].dynamic_years_start, session[:years].starting )%>
+				 	</select>
+					to
+					<select id="year_end" name="years[end]" onchange="javascript:this.form.submit();">
+					<%= options_for_select(session[:years].dynamic_years_end, session[:years].ending )%>
+					</select>
+
+					or
+
+					<%= link_to_function("All", "$('all').value = 'yes';forms[1].submit();") %>
+				<% end -%>
+
+			</td>
+
+				<td style="width: 33%;text-align: center;vertical-align: middle;">
+					<select id="nav_investigator" name="nav[investigator]" onchange="go('member', this.value);">
+						<option value="" style="font-weight: bold;">INVESTIGATOR</option>
+							<%= options_for_select(
+		                      @investigators.collect {|i| [ i.fullname(true), i.username ] }, @investigator_id
+							) %>
+		                  </select>
+				</td>
+				<td style="width: 33%;text-align: center; vertical-align: middle;">
+						<select id="nav_programs" name="nav[programs]" onchange="go('program', this.value)">
+							<option value="" style="font-weight: bold;">PROGRAMS</option>
+								<%= options_for_select(
+									@programs.collect {|p| [ p.program_title, p.id ] }, @program_id.to_i
+			                    ) %>
+						</select>
+				</td>
+
+
+			</tr>
+			</table>
+
+	</div>
+
+			
+	</div>
+</div>
+
+	
+
+	

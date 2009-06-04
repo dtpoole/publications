@@ -1,0 +1,44 @@
+<% @title = "Administration : Investigators" %>
+
+<% if !@investigators.empty? %>
+
+<table class="listing" style="width: 65%;">
+	<caption><%= @heading %></caption>
+	<tr>
+	<th>Investigators</th>
+	<th>&nbsp;</th>
+	</tr>
+
+	<tr>
+		<td colspan="2" style="text-align: center;" class="pagination">	<%= will_paginate(@investigators) %></td>
+	</tr>
+
+	<% @investigators.each do |investigator| %>
+	<tr class="<%= cycle("even", "odd") -%>"> 
+		<td><%= link_to investigator.fullname(true), :action => 'show', :id => investigator -%></td>
+			
+		<td style="text-align: right;">
+			<%= link_to( image_tag('pencil.png'), { :action => 'edit', :id => investigator } ) %>
+			<%= link_to( image_tag('remove.png'), 
+				{ :action => 'destroy', :id => investigator }, 
+				:confirm => "Remove #{investigator.fullname}?" ) %>
+		</td>		
+	</tr>
+	<% end %>
+	
+	<tr>
+		<td colspan="2" style="text-align: center;" class="pagination">	<%= will_paginate(@investigators) %></td>
+	</tr>
+
+</table>
+
+<% else %>
+
+<table>
+  <tr>
+	<td>No investigators found.</td>
+  </tr>
+</table>
+
+<% end %>
+

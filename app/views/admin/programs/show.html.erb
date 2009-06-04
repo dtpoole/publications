@@ -1,0 +1,42 @@
+<% @title = "Administration : Programs : " + @program.program_title %>
+
+<div id="person_entry">
+	<table class="person">
+		<tr>
+			<th>Title</th>
+			<td><%= @program.program_title -%></td>
+		</tr>
+		
+		<% if !@program.program_abbrev.blank? %>
+		<tr>
+			<th>Abbreviation</th>
+			<td><%= @program.program_abbrev -%></td>
+		</tr>
+		<% end %>
+		
+		
+		<% if !@program.program_category.blank? %>
+		<tr>
+			<th>Category</th>
+			<td><%= @program.program_category -%>
+			</td>
+		</tr>
+		<% end%>
+		
+		<% if @program.investigators.length > 0 %>
+		<tr>
+			<th>Investigators</th>
+			<td>
+				<%= (@program.investigators.collect { |i| link_to i.fullname, :controller => 'investigators', :action => 'show', :id => i}).join('<br>') -%>
+			</td>
+		</tr>
+		<% end %>
+	</table>
+</div>
+
+<div id="buttons" style="margin-top: 1em;">
+	<%= link_to "Edit", :action => 'edit', :id => @program %>&nbsp;
+	<%= link_to "Remove", { :action => 'destroy', :id => @program }, 
+		:confirm => "Remove #{@program.program_title}?" -%>
+</div>
+

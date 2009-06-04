@@ -1,0 +1,5 @@
+<% @title = "Programs : Edit : " + @program.program_title %>
+
+<% form_tag :action => 'update', :id => @program do %>
+  <%= render :partial => 'form' %>
+<% end %>

@@ -1,0 +1,26 @@
+<% jdbc = defined?(JRUBY_VERSION) ? 'jdbc' : '' %>
+
+development:
+   adapter: <%= jdbc %>mysql
+   encoding: utf8
+   host: leoz2.fccc.edu
+   database: publications_dev
+   username: cancerpub
+   password: cancer
+
+test:
+   adapter: <%= jdbc %>mysql
+   encoding: utf8
+   host: leoz2.fccc.edu
+   database: pubs_new
+   username: cancerpub
+   password: cancer
+
+production:
+    adapter: <%= jdbc %>mysql
+    encoding: utf8
+    host: leoz2.fccc.edu
+    #socket: /tmp/mysql.sock
+    database: publications
+    username: cancerpub
+    password: cancer

@@ -1,0 +1,17 @@
+<% @title = "Endnote citation for #{@publication.title}"%>
+
+	<div style="text-align: center; margin: 1em auto; width: 70%; border: 1px solid #ccc; padding: .5em; font-size: 1.1em;">
+	<p>Copy the text below and paste it into endnote to import this record.</p>
+</div>
+
+<% if @citation %>
+<div id="endnote_citation">
+<%= @citation %>
+</div>
+<% else %>
+
+<div class="information">
+	<p>Unable to generate Endnote citation for this publication.</p>
+</div>
+<% end %>
+

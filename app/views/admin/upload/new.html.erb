@@ -1,0 +1,20 @@
+<% @title = "EndNote Upload" %>
+
+<%= error_messages_for :endnote %>
+
+<%= form_tag({:action=>'create'}, :multipart => true) %>
+ <div id="person_entry">
+	<table class="person">
+		<tr>
+			<th>EndNote XML File*</th>
+			<td>
+			 <%= file_field_tag :endnote_file %>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<div id="buttons" style="margin-top: 1em;">
+	<%= submit_tag "Upload" %>
+</div>
+</form>

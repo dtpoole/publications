@@ -1,0 +1,19 @@
+<% @title = "Login" %>
+
+<% form_tag 'login' do %>		
+<div id="login">
+	<p>Please log in using your FoxNetID and password.</p>
+	<div>
+		<label>FoxNetID:</label><%= text_field 'login', 'username', :value => @username, :size => 12 %>
+	</div>
+	<div>
+		<label>Password:</label><%= password_field 'login', 'password', :size => 12 %>
+	</div>
+</div>
+
+<div class="center" style="padding-top: .5em; border-top: 1px solid #ccc;">
+<%= submit_tag 'Login' %>
+</div>
+<% end %>
+
+<%= javascript_tag "sf()" %>

@@ -1,0 +1,50 @@
+<% @title += year_range_display if params[:action] != 'year' %>
+
+<% if @abstracts.length > 0 %>
+
+	<div style="font-weight:bold; font-size: 16px;"><%= @title %></div>
+	<hr />
+	<table style="width: 50%;">
+	<tr>
+	<td><%= total_found(true) -%></td>
+	<td><%= will_paginate(@abstracts) if !@all %><td>
+	<td>
+		
+		<% if params[:abstracts] %>
+		<a href="<%= request.request_uri.gsub('&abstracts=1', '').gsub('abstracts=1&', '') %>">Hide Abstracts</a>
+		<% else %>
+		<a href="<%= request.request_uri + '&abstracts=1' %>">Show Abstracts</a>
+		<% end %>
+		
+		</td>
+	</tr>
+	</table>
+	<hr />
+	
+	<ul class="print_view">
+	<% @abstracts.each do |publication| %>
+	 <% if publication.publication_type == "Book" %>
+      	<li><%= format_book(publication, false) -%></li>
+      <% elsif publication.publication_type == "Book Section" %>
+      	<li><%= format_book_section(publication, false) -%></li>
+      <% else %> 
+      	<li><%= format_journal(publication, false) -%></li>
+      <% end %>
+
+		<% if params[:abstracts] -%>
+		<% if publication.abstract -%>
+			<div class="abstract_print" style="line-height: 1.4em;">
+			<%= publication.abstract -%>
+			</div>
+			<br />
+		<% end %>
+		<% end %>
+	<% end %>
+	</ul>
+
+
+<% else%>
+  <br /><h3>Sorry, no publications found.</h3>
+<% end %>
+ 
+

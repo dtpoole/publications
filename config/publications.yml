@@ -1,0 +1,22 @@
+---
+:ldap: 
+  :host: ldap.host.com
+  #:port: 389
+  :base: ou=People,dc=host,dc=com
+  :people_base: ou=People,dc=host,dc=com
+  :bind_dn: uid=admin,ou=People,dc=host,dc=com
+  :bind_password: password
+  :ssl: false
+
+:app:
+  :cookie_prefix: publications
+  :default_controller: admin/home
+  :admins:
+      - bob
+      - phill
+      - sally
+  :program_categories:
+      - Basic Science
+      - Population Science
+      - Medical Science
+      

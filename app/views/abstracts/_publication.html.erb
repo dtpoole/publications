@@ -1,0 +1,34 @@
+	  <tr class="<%= cycle("even", "odd") -%>"> 
+		<td>
+			
+		<div style="width: 95%; clear: none;">	
+          <% if publication.publication_type == "Book" %>
+          <%= format_book(publication) %>
+          <% elsif publication.publication_type == "Book Section" %>
+          <%= format_book_section(publication) %>
+          <% else %> 
+          <%= format_journal(publication) %>
+          <% end %>
+
+				<% if publication.abstract %>
+		<div style="margin-top: .3em;clear: none;">					
+				<a href="" id="abstract_link_#{publication.id}" onclick="toggle_abstract(this,<%= publication.id %>); return false;" style="font-size: .8em;">Show Abstract</a>
+				</div>
+				<% end %>
+
+			
+		<% if publication.abstract %>
+		<div id ="abstract_<%= publication.id %>" class="abstract_list" style="display: none;">
+			<%= publication.abstract %>
+		</div>
+		<% end %>
+		
+		</div>
+		</td>
+		
+		<td style="text-align: right;">
+			<% for investigator in publication.investigators %>
+				<%= link_to investigator.last_name, :action => 'member', :id => investigator.username %><br />
+			<% end %>
+		</td>
+	  </tr>

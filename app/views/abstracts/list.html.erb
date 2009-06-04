@@ -1,0 +1,49 @@
+<% @title += year_range_display if params[:action] != 'year' %>
+
+<% if @abstracts.length > 0 %>
+	<% if @program_id %>
+		<div class="yui-g" style="text-align: center; margin: 1em auto; width: 35%; border: 1px solid #ccc; padding: .5em; font-size: 1.1em;">
+			<div class="yui-u first">
+			<%= link_to 'View Faculty', {:controller => 'abstracts', :action => "faculty", :id => @program_id} -%>&nbsp;&nbsp;
+			</div>
+			<div class="yui-u">
+			<%= link_to 'View Interaction Graph', {:controller => 'graphs', :action => "program", :id => @program_id} -%>
+			</div>
+		</div>
+	<% end %>
+
+	<% if @investigator_id %>
+		<div style="text-align: center; margin: 1em auto; width: 35%; border: 1px solid #ccc; padding: .5em; font-size: 1.1em;">
+			<%= link_to 'View Interaction Graph', {:controller => 'graphs', :action => "member", :id => @investigator_id} -%>
+		</div>
+	<% end %>
+
+	<div class="information">
+		<p>The following publications are sorted by year and first author. Click on the investigator listed to the right of the citation to find all citations attributed to that investigator. Click on the citation title to see the abstract.</p>
+	</div>
+
+	<%= total_found -%><br /><a href="" onclick="javascript:window.open('<%=print_view_link %>'); return false;"><%= image_tag 'printer.png' %>&nbsp;Print View</a>
+	
+	<table class="listing">
+		<tr>
+		<th style="width: 90%;">Publication</th>
+		<th>Investigator(s)</th>
+		</tr>
+
+		<tr>
+			<td colspan="2" class="pagination" style="text-align: center;"><%= will_paginate(@abstracts) %></td>
+		</tr>
+
+		<%= render :partial => "publication", :collection => @abstracts %>
+		
+		<tr>
+			<td colspan="2" class="pagination" style="text-align: center;"><%= will_paginate(@abstracts) -%></td>
+		</tr>
+	
+	</table>
+
+<% else%>
+  <br /><h3>Sorry, no publications found.</h3>
+<% end %>
+ 
+

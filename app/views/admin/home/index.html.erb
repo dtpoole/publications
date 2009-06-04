@@ -1,0 +1,11 @@
+<% @title = "Administration" %>
+
+<div class="information">
+	<p>This is the administrative console.  A list of options is below.</p>
+</div>
+
+<div class="center">
+	<%= button_to 'Manage Programs', {:controller => 'programs'} -%><br />
+	<%= button_to 'Manage Investigators', {:controller => 'investigators'} -%><br />
+	<%= button_to 'Import Endnote XML file', {:controller => 'upload'} -%>
+</div>

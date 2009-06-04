@@ -1,0 +1,60 @@
+<% @title = @publication.title %>
+
+
+<div id="publication">
+	<div id="authors">
+		<p>
+			<% if @publication.full_authors and @publication.full_authors.length > 10 -%>
+			<%= format_authors(@publication.full_authors) -%>
+			<% else -%>
+			<%= format_authors(@publication.authors) -%>
+			<% end -%>
+		</p>
+	</div>
+	
+	<div id="publication_title">
+		<p><%= @publication.title %></p>
+	</div>
+	
+	<div id="journal">
+		<p>
+			 <% if @publication.publication_type == "Book" %>
+	          <%= format_book(@publication, false, true) %>
+	          <% elsif @publication.publication_type == "Book Section" %>
+	          <%= format_book_section(@publication, false, true) %>
+	          <% else %> 
+	          <%= format_journal(@publication, false, true) %>
+	          <% end %>
+
+	</p>
+	</div>
+	<div id="abstract">
+		<p>
+			<span>Abstract</span>
+			<%= @publication.abstract %>
+		</p>
+	</div>
+	
+	<% if @publication.deposited_date or @publication.electronic_publication_date or @publication.publication_date or @publication.publication_status or @publication.status %>
+	<div id="import">
+		<p>
+		<span>Note</span>
+		Automated medline import.  Electronic deposit: <%= @publication.deposited_date %>.Electronic publication: <%= @publication.electronic_publication_date %>. Publication Date: <%= @publication.publication_date %>. Publication status: <%= @publication.publication_status %>. Status: <%= @publication.status %>. </p>
+	</div>
+	<% end %>
+	
+	
+	<div id="links">
+	<% if @publication.url %>
+	<div>
+		<%= link_to 'View PubMed entry', @publication.url  %>
+	</div>
+	<% end %>
+	<!--
+	<div>
+		<%= link_to 'View citation formatted for EndNote', :action => 'endnote', :id => @publication  %>
+	</div>
+-->
+	</div>
+</div>
+

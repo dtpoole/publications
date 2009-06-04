@@ -1,0 +1,43 @@
+<% if @program_id %>
+	<div class="yui-g" style="text-align: center; margin: 1em auto; width: 35%; border: 1px solid #ccc; padding: .5em; font-size: 1.1em;">
+		<div class="yui-u first">
+		<%= link_to 'View Publications', {:controller => 'abstracts', :action => "program", :id => @program_id} -%>&nbsp;&nbsp;
+		</div>
+		<div class="yui-u">
+		<%= link_to 'View Interaction Graph', {:controller => 'graphs', :action => "program", :id => @program_id} -%>
+		</div>
+	</div>
+<% end %>
+
+<div class="information">
+<p>Click on the investigator to find all citations attributed to that investigator.</p>
+</div>
+
+
+<% columns = 2 -%>
+
+<div id="person_entry">
+<table class="person" style="width: 100%;"> 
+
+<% @faculty.in_groups_of(columns) do |row| -%>
+	<tr class="<%= cycle("", "odd") -%>"> 
+	<% row.each do |investigator| -%>
+		<td>
+		<%= link_to( investigator.first_name + " " + investigator.last_name, :action => 'member', :id => investigator.username ) if investigator -%>
+		</td>
+		
+			<% if investigator and investigator.email %>
+		<td>
+		<%= mail_to(investigator.email, "email", 
+				:subject => "Contact from the Cancer Center Publications site",
+				:encode => "javascript") if investigator -%>
+		</td>
+		<% end %>
+	<% end %>
+	</tr>
+<% end %>
+
+</table>
+
+</div>
+

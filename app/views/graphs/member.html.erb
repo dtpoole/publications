@@ -1,0 +1,19 @@
+<% @title = "Interaction Graph for " + @investigator.fullname %>
+<% @title += year_range_display %>
+
+<div class="information">
+<p>This graph shows interactions for <%=  @investigator.fullname %>.  Mouse over a specific member to get the total publication count during the specified year range and the number of intra-programmatic and inter-programmatic collaborations during that time. To better visualize the relationships you can click any of the members.</p>
+</div>
+
+
+<div id="member" style="width: 0 auto; text-align:center;"> 
+	<div id="InvestigatorGraph"></div>
+
+	<script type="text/javascript">
+		var activity = new FusionCharts("<%= url_for(:controller=>'flash',:action=>'DragNode.swf') %>", "InvestigatorGraph", "950", "700", "0", "1");
+		activity.setDataURL("<%= url_for(:controller=>'graphs', :action=>'member_nodes', :id => params[:id]) %>");
+		activity.render("InvestigatorGraph");
+	</script>
+</div>
+
+

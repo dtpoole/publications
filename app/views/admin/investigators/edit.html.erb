@@ -1,0 +1,5 @@
+<% @title = "Administration : Investigators : #{@investigator.fullname}" %>
+
+<% form_tag :action => 'update', :id => @investigator do %>
+  <%= render :partial => 'form' %>
+<% end %>
