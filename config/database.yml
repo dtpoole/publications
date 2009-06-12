@@ -3,24 +3,24 @@
 development:
    adapter: <%= jdbc %>mysql
    encoding: utf8
-   host: leoz2.fccc.edu
+   host: db_server
    database: publications_dev
-   username: cancerpub
-   password: cancer
+   username: user
+   password: pass
 
 test:
    adapter: <%= jdbc %>mysql
    encoding: utf8
-   host: leoz2.fccc.edu
-   database: pubs_new
-   username: cancerpub
-   password: cancer
+   host: db_server
+   database: publications_test
+   username: user
+   password: pass
 
 production:
     adapter: <%= jdbc %>mysql
     encoding: utf8
-    host: leoz2.fccc.edu
+    host: db_server
     #socket: /tmp/mysql.sock
     database: publications
-    username: cancerpub
-    password: cancer
+    username: user
+    password: pass
